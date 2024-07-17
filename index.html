@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https:; style-src 'self' 'unsafe-inline' https:; frame-src 'self' https:;">
         <title>seed-phrase.com</title>
         <!--  "If you're not embarrassed by the first version of your product, you've launched too late." -RH -->
         <style>
@@ -63,8 +64,6 @@
             
             footer a {
                 color: #fff;
-                text-decoration: none;
-                margin: 0 10px;
             }
             
             #rec {
@@ -100,7 +99,7 @@
             <p>Bitcoin, as a store of value, is scarce, highly sought after, and controlled only by the key-holders.
                 Bitcoin, as a protocol, is decentralized, trust-minimized, and designed to be resistant to corruption.</p>
             <p>Welcome to seed-phrase.com. Solve puzzles to uncover a secret recovery phrase that unlocks a Bitcoin wallet. The first person to decode the entire phrase will control its contents. Visit back here for additional clues and updates. Have fun & good luck.</p>
-            <p><a href="#policies">Policies & Disclaimers</a></p>
+            <p><a href="#feedback">Questions & Feedback</a> | <a href="#policies">Policies & Disclaimers</a></p>
             <div class="clues">
                 <h2>Clues</h2>
                 <hr>
@@ -132,7 +131,10 @@
             </div>
         </div>
         <footer>
-            <h3 id="policies">Policies & Disclaimers</h3>
+            <h2 id="feedback">Questions & Feedback</h2>
+            <a href="https://straty.typeform.com/to/fJmePFnp" target="_blank">Click to send questions or feedback.</a>
+            <br>
+            <h2 id="policies">Policies & Disclaimers</h2>
             <p>Participation is voluntary. No purchase is necessary. You are not guaranteed any outcome or reward. Beware of scammers. Never give your private keys or seed recovery phrase to anyone you don't want to have access to your wallets, addresses, and the assets they contain. No one should ever ask you for this sensitive information via email, chat, text, websites, apps, etc., unless they are trying to steal your funds. This website, seed-phrase.com, is the only official channel but it will link out to and embed other channels. The organizers are not liable for any losses or damages incurred through participation in the game or use of the website. By participating, you agree to the terms and conditions outlined on the website. While accuracy is a priority, the completeness or accuracy of any information provided is not guaranteed. There will be red herrings. The organizers reserve the right to modify the rules, disclaimers, and policies at any time without prior notice.</p>
             <div>You matter.</div>
         </footer>
