@@ -30,6 +30,11 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
             
+            .container h2 {
+                margin-block-start: 0.1em;
+                margin-block-end: 0.1em;
+            }
+            
             .container img {
                 max-width: 100%;
                 height: auto;
@@ -52,6 +57,95 @@
                 background-color: rgba(0, 0, 0, 0.05);
                 padding: 5px 10px;
                 border-radius: 5px;
+            }
+            
+            .encrypt-decrypt-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 20px;
+                width: 800px;
+            }
+            
+            .section {
+                background: #fff;
+                padding: 0px 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .encrypt-tool-form-group {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 20px;
+            }
+            
+            .encrypt-tool-form-group label {
+                margin-bottom: 5px;
+            }
+            
+            .encrypt-tool-form-group input, .encrypt-tool-form-group textarea, .encrypt-tool-form-group button {
+                padding: 10px;
+                font-size: 1em;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .encrypt-tool-form-group textarea {
+                height: 80px;
+                resize: vertical;
+            }
+            
+            .encrypt-tool-form-group button {
+                background: #007BFF;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                width: auto;
+            }
+            
+            .encrypt-tool-form-group button:hover {
+                background: #0056b3;
+            }
+            
+            .encrypt-tool-button-container {
+                display: flex;
+                align-items: center;
+            }
+            
+            .encrypt-tool-button-container .error-message {
+                margin-left: 10px;
+            }
+            
+            .error-message {
+                color: red;
+                font-size: 0.9em;
+                margin-top: -10px;
+                margin-bottom: 10px;
+            }
+            
+            .encrypt-tool-form-group #copyFieldsButton {
+                color: #007BFF;
+                text-decoration: underline;
+                cursor: pointer;
+                font-size: 0.9em;
+                padding: 0;
+                margin: 0;
+                border: none;
+                background: none;
+            }
+            
+            .encrypt-tool-form-group #copyFieldsButton:hover {
+                color: #0056b3;
+                border: none;
+                background: none;
             }
             
             footer {
@@ -101,7 +195,7 @@
             <p>Bitcoin, as a store of value, is scarce, highly sought after, and controlled only by the key-holders.
                 Bitcoin, as a protocol, is decentralized, trust-minimized, and designed to be resistant to corruption.</p>
             <p>Welcome to seed-phrase.com. Solve puzzles to uncover a secret recovery phrase that unlocks a Bitcoin wallet. The first person to decode the entire phrase will control its contents. Visit back here for additional clues and updates. Have fun & good luck.</p>
-            <p><a href="#feedback">Questions & Feedback</a> | <a href="#policies">Policies & Disclaimers</a></p>
+            <p><a href="#encrypttool">Encrypt & Decrypt Tool</a> | <a href="#feedback">Questions & Feedback</a> | <a href="#policies">Policies & Disclaimers</a></p>
             <div class="clues">
                 <h2>Clues</h2>
                 <hr>
@@ -155,6 +249,74 @@
                     <img src="img/illusionsmichael.png" alt="Magician pulling back a large black cloth, mid-motion, revealing something hidden, while an astonished audience looks on in wonder." title="Illusions Michael">
                 </div>
             </div>
+        </div>
+        <div class="container">
+            <h2 id="encrypttool">Encryption & Decryption</h2>
+            <p>This tool lets you encrypt and decrypt a message. When you encrypt a message, the original text is scrambled using a password, making it unreadable to anyone who doesn’t have the correct password. The password is a key that locks (encrypts) and unlocks (decrypts) your message. The encrypted message is the scrambled version that you can safely share publicly with minimal risk that the wrong person could decrypt it.</p>
+            <p>To decrypt a message, you’ll need the encrypted text, the IV, and the same password you used for encryption. Decryption is the reverse process — it takes the scrambled text and turns it back into the original message using the password and IV. If you enter everything correctly, your secret message will be revealed!</p>
+            <p>Play around.</p>
+            <div class="encrypt-decrypt-container">
+                <div class="section" id="encryptSection">
+                    <h3>Encrypt</h3>
+                    <div class="encrypt-tool-form-group">
+                        <label for="messageInput">Text to Encrypt:</label>
+                        <textarea id="messageInput">Some text</textarea>
+                        <span id="messageError" class="error-message"></span>
+                        
+                        <label for="passwordInput">Password:</label>
+                        <input type="text" id="passwordInput">
+                        <span id="passwordError" class="error-message"></span>
+                        
+                        <label for="saltInput">Salt (optional):</label>
+                        <input type="text" id="saltInput">
+                        
+                        <div class="encrypt-tool-button-container">
+                            <button id="encryptButton">Encrypt</button>
+                            <span id="encryptError" class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="encrypt-tool-form-group">
+                        <label for="ivOutput">Initialization Vector:</label>
+                        <input type="text" id="ivOutput" readonly>
+                        
+                        <label for="result">Encrypted Text:</label>
+                        <textarea id="result" readonly></textarea>
+                        
+                        <button class="link-style" id="copyFieldsButton">Copy fields to the right</button>
+                    </div>
+                </div>
+                
+                <div class="section" id="decryptSection">
+                    <h3>Decrypt</h3>
+                    <div class="encrypt-tool-form-group">
+                        <label for="decryptMessageInput">Text to Decrypt:</label>
+                        <textarea id="decryptMessageInput"></textarea>
+                        <span id="decryptMessageError" class="error-message"></span>
+                        
+                        <label for="decryptIvInput">Initialization Vector:</label>
+                        <input type="text" id="decryptIvInput">
+                        <span id="decryptIvError" class="error-message"></span>
+                        
+                        <label for="decryptPasswordInput">Password:</label>
+                        <input type="text" id="decryptPasswordInput">
+                        <span id="decryptPasswordError" class="error-message"></span>
+                        
+                        <label for="decryptSaltInput">Salt:</label>
+                        <input type="text" id="decryptSaltInput">
+                        <span id="decryptSaltError" class="error-message"></span>
+                        
+                        <div class="encrypt-tool-button-container">
+                            <button id="decryptButton">Decrypt</button>
+                            <span id="decryptError" class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="encrypt-tool-form-group">
+                        <label for="decryptedResult">Decrypted Text:</label>
+                        <textarea id="decryptedResult" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <p>There are additional features to the encryption used here that make the encryption stronger and harder to crack without all of the needed information. First, after you encrypt a message, you’ll see something called an ‘Initialization Vector’ (IV). This is a unique piece of information that helps ensure that even if you encrypt the exact same message twice, you’ll get different results which adds even more security. Second, there’s an optional ‘salt’ field, which lets the person encrypting the message add additional random data. Both of these features make it hard to just build a big database that maps the encrypted text to the decrypted text.</p>
         </div>
         <footer>
             <h2 id="feedback">Questions & Feedback</h2>
@@ -265,6 +427,154 @@
             setInterval(updateClock, 1000);
             updateClock(); // Initial update
             
+            async function hashPassword(password, salt, iterations = 1000) {
+                const saltBuffer = new TextEncoder().encode(salt || '');
+                let hashBuffer = new TextEncoder().encode(password);
+                for (let i = 0; i < iterations; i++) {
+                    const combinedBuffer = new Uint8Array([...new Uint8Array(hashBuffer), ...saltBuffer]);
+                    hashBuffer = await crypto.subtle.digest('SHA-256', combinedBuffer);
+                }
+                return hashBuffer;
+            }
+            
+            async function encryptMessage(message, keyBuffer) {
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const key = await crypto.subtle.importKey(
+                    "raw",
+                    keyBuffer,
+                    { name: "AES-GCM" },
+                    false,
+                    ["encrypt", "decrypt"]
+                );
+                const messageBuffer = new TextEncoder().encode(message);
+                const ciphertext = await crypto.subtle.encrypt(
+                    {
+                        name: "AES-GCM",
+                        iv: iv
+                    },
+                    key,
+                    messageBuffer
+                );
+                return { iv, ciphertext };
+            }
+            
+            async function decryptMessage(iv, ciphertext, keyBuffer) {
+                const key = await crypto.subtle.importKey(
+                    "raw",
+                    keyBuffer,
+                    { name: "AES-GCM" },
+                    false,
+                    ["decrypt"]
+                );
+                const decryptedMessage = await crypto.subtle.decrypt(
+                    {
+                        name: "AES-GCM",
+                        iv: iv
+                    },
+                    key,
+                    ciphertext
+                );
+                return new TextDecoder().decode(decryptedMessage);
+            }
+            
+            function arrayBufferToHex(buffer) {
+                return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+            
+            function hexToUint8Array(hex) {
+                const bytes = new Uint8Array(hex.length / 2);
+                for (let i = 0; i < hex.length; i += 2) {
+                    bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+                }
+                return bytes;
+            }
+            
+            function clearErrors() {
+                document.getElementById("messageError").textContent = "";
+                document.getElementById("passwordError").textContent = "";
+                document.getElementById("encryptError").textContent = "";
+                document.getElementById("decryptMessageError").textContent = "";
+                document.getElementById("decryptIvError").textContent = "";
+                document.getElementById("decryptPasswordError").textContent = "";
+                document.getElementById("decryptSaltError").textContent = "";
+                document.getElementById("decryptError").textContent = "";
+            }
+            
+            function showError(fieldId, message) {
+                document.getElementById(fieldId).textContent = message;
+            }
+            
+            document.getElementById("encryptButton").addEventListener("click", async () => {
+                clearErrors();
+                const password = document.getElementById("passwordInput").value;
+                const salt = document.getElementById("saltInput").value;
+                const message = document.getElementById("messageInput").value;
+                
+                if (!message) {
+                    showError("messageError", "Please enter text to encrypt.");
+                    return;
+                }
+                
+                if (!password) {
+                    showError("passwordError", "Please enter a password.");
+                    return;
+                }
+                
+                try {
+                    const hashedPassword = await hashPassword(password, salt);
+                    const { iv, ciphertext } = await encryptMessage(message, hashedPassword);
+                    
+                    const ivHex = arrayBufferToHex(iv);
+                    const ciphertextHex = arrayBufferToHex(ciphertext);
+                    
+                    document.getElementById("ivOutput").value = ivHex;
+                    document.getElementById("result").value = ciphertextHex;
+                } catch (error) {
+                    showError("encryptError", "An error occurred during encryption.");
+                }
+            });
+            
+            document.getElementById("decryptButton").addEventListener("click", async () => {
+                clearErrors();
+                const password = document.getElementById("decryptPasswordInput").value;
+                const salt = document.getElementById("decryptSaltInput").value;
+                const ivHex = document.getElementById("decryptIvInput").value;
+                const ciphertextHex = document.getElementById("decryptMessageInput").value;
+                
+                if (!ciphertextHex) {
+                    showError("decryptMessageError", "Please enter text to decrypt.");
+                    return;
+                }
+                
+                if (!ivHex) {
+                    showError("decryptIvError", "Please enter the initialization vector.");
+                    return;
+                }
+                
+                if (!password) {
+                    showError("decryptPasswordError", "Please enter a password.");
+                    return;
+                }
+                
+                try {
+                    const hashedPassword = await hashPassword(password, salt);
+                    const iv = hexToUint8Array(ivHex);
+                    const ciphertext = hexToUint8Array(ciphertextHex);
+                    const decryptedText = await decryptMessage(iv, ciphertext, hashedPassword);
+                    
+                    document.getElementById("decryptedResult").value = decryptedText;
+                } catch (error) {
+                    document.getElementById("decryptedResult").value = ""; // Clear the decrypted text if there's an error
+                    showError("decryptError", "An error occurred during decryption.");
+                }
+            });
+            
+            document.getElementById("copyFieldsButton").addEventListener("click", () => {
+                document.getElementById("decryptMessageInput").value = document.getElementById("result").value;
+                document.getElementById("decryptIvInput").value = document.getElementById("ivOutput").value;
+                document.getElementById("decryptPasswordInput").value = document.getElementById("passwordInput").value;
+                document.getElementById("decryptSaltInput").value = document.getElementById("saltInput").value;
+            });
         </script>
         <!--  For WEB -->
     </body>
